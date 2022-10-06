@@ -10,6 +10,7 @@ from selenium.webdriver.common.by import By
 
 #VARIABLES
 
+
 #drivers below need to be moved to the main code section
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
@@ -34,8 +35,13 @@ sleep(3)
 
 #at this point the trash day should be loaded on screen the next step is to extract the data
 
-next_date = driver.find_element(By.)
-
+#<strong>Wednesday, October 5, 2022</strong>   lastChild.textContent
+#<span class="rich-content-name">Trash</span>
+#<span class="rich-content-name">Compost</span>
+Trash = driver.find_element(By.XPATH, "//*[contains(text(), 'Trash')]").text
+print(Trash)
+next_date = driver.find_element(By.TAG_NAME, 'strong').text
+print(str(next_date))
 sleep(100)
 driver.close() # kills the web browser 
 
