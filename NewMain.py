@@ -1,5 +1,4 @@
-#imports
-from concurrent.futures import thread
+
 import requests
 import re
 from datetime import datetime as dt
@@ -90,7 +89,7 @@ def light_control():
 #Thread setup
 #setting this up a multithread project allows me to go back later and enable a button control interface if i feel like it
 t1 = Thread(target=get_data)
-t2 = thread(target=light_control)
+t2 = Thread(target=light_control)
 
 #Main code
 t1.start()

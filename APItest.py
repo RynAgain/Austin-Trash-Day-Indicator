@@ -27,11 +27,11 @@ headers = {
 }
 
 response = requests.request("GET", url, headers=headers, params=querystring).json()
-
-print(response['sections'][1]['rows'][0]['html'])
-print(response['sections'][1]['rows'][1]['html'])
-print(response['sections'][1]['rows'][2]['html'])
-print(response['sections'][1]['rows'][3]['html']) #this one is the recycling, but i'll have to test it next week
+print(response)
+#print(response['sections'][1]['rows'])
+#print(response['sections'][1]['rows'][1]['html'])
+#print(response['sections'][1]['rows'][2]['html'])
+#print(response['sections'][1]['rows'][3]['html']) #this one is the recycling, but i'll have to test it next week
 
 #success! gives me the date and the bins that need to go out, all in
 #simple json file that i can then pass to variables!  This makes
