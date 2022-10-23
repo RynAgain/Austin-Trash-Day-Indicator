@@ -19,5 +19,8 @@ I think i finished the code?  I gotta build the electronics and test it... I'll 
 
 
 ### 10/20/22
-
+1
 Small gap in updates.  A few days after my last update, I discovered that the api i was using was unstable after a few days.  Additionally, this project lead to a breakthrough on a very important work project so I switched my focus to that for a bit.  Today I fixed the api error so this project should be fully stable now.
+
+2
+Tested it on my Rpi.  It works! now i just have to finish wiring it, adjust the timing and make it fun.  But the functional code is written
