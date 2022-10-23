@@ -16,3 +16,8 @@ With the variables easy to obtain, i can now work on the raspberry pi portion of
 Made a new main file, removing the old one and putting into a a legacy folder.  I want to keep the code for future reference. 
 
 I think i finished the code?  I gotta build the electronics and test it... I'll add photos of all that.
+
+
+### 10/20/22
+
+Small gap in updates.  A few days after my last update, I discovered that the api i was using was unstable after a few days.  Additionally, this project lead to a breakthrough on a very important work project so I switched my focus to that for a bit.  Today I fixed the api error so this project should be fully stable now.
