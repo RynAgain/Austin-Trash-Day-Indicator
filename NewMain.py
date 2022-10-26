@@ -29,7 +29,7 @@ def clean_html(raw_html):
   cleantext = re.sub(CLEANER, '', raw_html)
   return cleantext
 
-def get_data(): #function for retrieving the date data and recyling data
+def get_data(): #function for retrieving the date data and recycling data
     global next_event
     global recycling
     event_types = [] #list to hold what events are happening
@@ -71,7 +71,6 @@ def get_data(): #function for retrieving the date data and recyling data
         wait(43_200) #this makes it refresh every 12 hrs
         event_types = []
 
-
 def light_control():
     while True:
         if recycling == True:
@@ -94,6 +93,7 @@ if __name__ == '__main__':
 
     #Main code
     t1.start()
+    wait(10)#stagger the 
     t2.start()
 
 #Things to add:
