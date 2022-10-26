@@ -1,23 +1,31 @@
 
+from random import randint
+from string import whitespace
 import requests, json
 import re
 from datetime import datetime as dt
 from threading import Thread
 from time import sleep as wait
-import RPi.GPIO as gpio
+import board
+from neopixel import NeoPixel
 from rpiAPI import PINs, BUTTs
 from config import secret_key #secret key is hidden to protect my address.
 
 
-#Setup for RPI control
-gpio.setmode(gpio.BCM)
-gpio.setwarnings(False)
+#Setup for RPI NeoPixel control
+num_pixels = 7 #neo pixel size
+pixels = neopixel.NeoPixel(board.D18, num_pixels)
 
-#create RPI control Objects (buttons and lights)
-light = PINs(26, 'Controls main light 1, on pin 26')
-testbutton = BUTTs(19, 'just a button, not sure if i am going to use it.')
-h1 = PINs(21, 'light on pin 21')
-h2 = PINs(20, 'light on pin 20')
+#Colors
+RED = (255, 0, 0)
+YELLOW = (255, 150, 0)
+GREEN = (0, 255, 0)
+CYAN = (0, 255, 255)
+BLUE = (0, 0, 255)
+PURPLE = (180, 0, 255)
+WHITE = (255,255,255)
+BLACK= (0,0,0)
+colours = [RED, YELLOW, GREEN, CYAN, BLUE, PURPLE, WHITE, BLACK] #for possible control later.
 
 #Variables
 next_event = '' #string for the next event
@@ -71,17 +79,59 @@ def get_data(): #function for retrieving the date data and recycling data
         wait(43_200) #this makes it refresh every 12 hrs
         event_types = []
 
+def idle():
+    for i in range(round(43_200/num_pixels)):
+        for j in range(num_pixels):
+            pixels[j] = colours[randint(0, len(colours) - 1)]
+            wait(1)
+        
+def blink():
+    for i in range(10):
+        pixels.fill(RED)
+        wait(1)
+        pixel.fill(GREEN)
+        wait(1)
+
 def light_control():
     while True:
-        if recycling == True:
-            light.On_Function() #Turns on the recycling light
-            h1.On_Function()
-            h2.Off_function()
-        else: #recycling is false
-            light.Off_function()
-            h1.Off_function()
-            h2.On_Function()
-        wait(43_200)
+        rainbow_cycle(0.1)
+        if recycling == True: #turn light blue
+            pixels.fill(BLUE)
+        else: #recycling is false #light is not blue
+            blink()
+        idle()
+
+
+#Pixel functions
+def wheel(pos):
+    # Input a value 0 to 255 to get a color value.
+    # The colours are a transition r - g - b - back to r.
+    if pos < 0 or pos > 255:
+        r = g = b = 0
+    elif pos < 85:
+        r = int(pos * 3)
+        g = int(255 - pos * 3)
+        b = 0
+    elif pos < 170:
+        pos -= 85
+        r = int(255 - pos * 3)
+        g = 0
+        b = int(pos * 3)
+    else:
+        pos -= 170
+        r = 0
+        g = int(pos * 3)
+        b = int(255 - pos * 3)
+    return (r, g, b) if ORDER in (neopixel.RGB, neopixel.GRB) else (r, g, b, 0)
+
+
+def rainbow_cycle(z):
+    for j in range(255):
+        for i in range(num_pixels):
+            pixel_index = (i * 256 // num_pixels) + j
+            pixels[i] = wheel(pixel_index & 255)
+        #pixels.show()
+        wait(z)
 
 
 
